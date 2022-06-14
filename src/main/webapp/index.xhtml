@@ -1,0 +1,55 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <title>Lista de Alunos</title>
+    </h:head>
+
+    <h:form id="form" prependId="false">
+        <div style=" width: 50%">
+
+            <p:growl id="msgs" showDetail="true"/>
+
+            <p:dataTable id="alunos" var="aluno" value="#{alunoMB.alunos}" rowKey="#{aluno.id}"
+                         selection="#{alunoMB.alunoSelecionado}" selectionMode="single"
+                         editable="true" style="margin-bottom:20px">
+
+                <p:ajax event="rowEdit" listener="#{alunoMB.onRowEdit}" update=":form:msgs"/>
+                <p:ajax event="rowEditCancel" listener="#{alunoMB.onRowCancel}" update=":form:msgs"/>
+
+                <p:column headerText="Id">
+                    <h:outputText value="#{aluno.id}"/>
+                </p:column>
+
+                <p:column headerText="Nome">
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{aluno.nome}"/>
+                        </f:facet>
+                        <f:facet name="input">
+                            <p:inputText id="nomeInput" value="#{aluno.nome}" style="width:100%" />
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+
+                <p:column headerText="Nota">
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{aluno.nota}"/>
+                        </f:facet>
+                        <f:facet name="input">
+                            <p:inputText id="notaInput" value="#{aluno.nota}" style="width:100%" />
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+
+                <p:column style="width:50px">
+                    <p:rowEditor editTitle="Editar" cancelTitle="Cancelar" saveTitle="Salvar" />
+                </p:column>
+            </p:dataTable>
+        </div>
+    </h:form>
+
+</html>
